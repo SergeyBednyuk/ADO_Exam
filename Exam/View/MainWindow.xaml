@@ -6,8 +6,8 @@
     xmlns:local="clr-namespace:Exam.ViewModel"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="MainWindow"
-    Width="525"
-    Height="350"
+    Width="800"
+    Height="450"
     mc:Ignorable="d">
     <Window.DataContext>
         <local:MainWindowViewModel />
@@ -17,46 +17,220 @@
             <MenuItem Header="File">
                 <MenuItem Header="Exit" />
             </MenuItem>
-            <MenuItem Header="Query">
+            <MenuItem Header="QuerySortByTariffPlane">
                 <MenuItem Command="{Binding SortByTariffPlan}" Header="Sort by Tariff plan" />
                 <MenuItem Header="Print servce 2 Tariff plan" />
-                <MenuItem
-                    Command="{Binding GetCostService}"
-                    CommandParameter="{Binding ElementName=TextBox, Path=Text}"
-                    Header="Get Cost service">
+                <MenuItem Command="{Binding GetContractsInThiseMonth}" Header="Get contract in this month" />
+                <MenuItem Command="{Binding GetInfoAboutSmart}" Header="Get info about Smart" />
+                <MenuItem CommandParameter="{Binding ElementName=TextBox, Path=Text}" Header="Get Cost service">
                     <TextBox x:Name="TextBox" MinWidth="50" />
                 </MenuItem>
+                <TabControl
+                    x:Name="tabControl"
+                    Width="47"
+                    Height="21"
+                    Margin="32,0,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top">
+                    <TabItem Header="TabItem">
+                        <Grid Background="#FFE5E5E5" />
+                    </TabItem>
+                    <TabItem Header="TabItem">
+                        <Grid Background="#FFE5E5E5" />
+                    </TabItem>
+                </TabControl>
             </MenuItem>
         </Menu>
 
-        <ListBox x:Name="ListBox" ItemsSource="{Binding Query}">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition />
-                            <RowDefinition />
-                        </Grid.RowDefinitions>
-                        <TextBox
-                            Grid.Row="0"
-                            Grid.Column="0"
-                            Text="{Binding Path=ServiceId}" />
-                        <TextBox
-                            Grid.Row="0"
-                            Grid.Column="1"
-                            Text="{Binding Path=SubscriptionFee}" />
-                        <TextBox
-                            Grid.Row="1"
-                            Grid.Column="0"
-                            Text="{Binding Path=ServiceName}" />
-                    </Grid>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+        <TabControl x:Name="TabControlQuery">
+            <!--  First query  -->
+            <TabItem x:Name="TabItem1Query" IsSelected="True">
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Sort by tarrif plane" />
+                    </StackPanel>
+                </TabItem.Header>
+                <TabItem.Content>
+                    <ListBox x:Name="ListBoxFirstQuery" ItemsSource="{Binding QuerySortByTariffPlane}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                    </Grid.RowDefinitions>
+                                    <TextBox
+                                        Grid.Row="0"
+                                        Grid.Column="0"
+                                        IsReadOnly="True"
+                                        Text="{Binding Path=ServiceId}" />
+                                    <TextBox
+                                        Grid.Row="0"
+                                        Grid.Column="1"
+                                        IsReadOnly="True"
+                                        Text="{Binding Path=SubscriptionFee}" />
+                                    <TextBox
+                                        Grid.Row="1"
+                                        Grid.Column="0"
+                                        IsReadOnly="True"
+                                        Text="{Binding Path=ServiceName}" />
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </TabItem.Content>
+            </TabItem>
+            <!--  Second query  -->
+            <TabItem x:Name="TabItem2Query">
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Get service the secont tariff plane" />
+                    </StackPanel>
+                </TabItem.Header>
+                <TabItem.Content>
+                    <ListBox x:Name="LstBxSecondQuery" ItemsSource="{Binding QueryGetServicesTheSecondTariffPlane}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                    </Grid.RowDefinitions>
+                                    <TextBox
+                                        Name="TxtBlckServiceName"
+                                        Grid.Row="0"
+                                        Grid.Column="0"
+                                        Grid.ColumnSpan="2"
+                                        IsReadOnly="True"
+                                        Text="{Binding Path=ServiceName}" />
+                                    <TextBox
+                                        Name="TxtBlckAboutService"
+                                        Grid.Row="1"
+                                        Grid.Column="0"
+                                        Grid.ColumnSpan="2"
+                                        IsReadOnly="True"
+                                        Text="{Binding Path=AboutService}" />
+                                    <TextBox
+                                        Name="TxtBlckCostAddition"
+                                        Grid.Row="2"
+                                        Grid.Column="0"
+                                        IsReadOnly="True"
+                                        Text="{Binding Path=CostAddition}" />
+                                    <TextBox
+                                        Name="TxtBlckSubscriptionFee"
+                                        Grid.Row="2"
+                                        Grid.Column="1"
+                                        IsReadOnly="True"
+                                        Text="{Binding Path=SubscriptionFee}" />
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </TabItem.Content>
+            </TabItem>
+            <!--  Third query  -->
+            <TabItem x:Name="TabItem3Query">
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Get contract in this month" />
+                    </StackPanel>
+                </TabItem.Header>
+                <TabItem.Content>
+                    <ListBox Name="LstBxThirdQuery" ItemsSource="{Binding QueryGetContractsInThisMonth}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                    </Grid.RowDefinitions>
+                                    <TextBox
+                                        Grid.Row="0"
+                                        Grid.Column="0"
+                                        IsReadOnly="True"
+                                        Text="{Binding Path=ContractId}" />
+                                    <TextBox
+                                        Grid.Row="1"
+                                        Grid.Column="0"
+                                        IsReadOnly="True"
+                                        Text="{Binding Path=DateOfConfinement}" />
+                                    <TextBox
+                                        Grid.Row="1"
+                                        Grid.Column="1"
+                                        IsReadOnly="True"
+                                        Text="{Binding Path=ExpirationDate}" />
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </TabItem.Content>
+            </TabItem>
+            <!--  Fourth query  -->
+            <TabItem x:Name="TabItem4Query">
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Get info about Smart" />
+                    </StackPanel>
+                </TabItem.Header>
+                <TabItem.Content>
+                    <ListBox Name="LstBxFourthQuery" ItemsSource="{Binding Path=QueryGetInfoAboutSmart}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBox
+                                        Grid.Row="0"
+                                        Grid.Column="0"
+                                        Text="{Binding Path=TariffPlanId}" />
+                                    <TextBox
+                                        Grid.Row="0"
+                                        Grid.Column="1"
+                                        Text="{Binding Path=TariffPlanName}" />
+                                    <TextBox
+                                        Grid.Row="1"
+                                        Grid.Column="0"
+                                        Text="{Binding Path=CostOfAColl}" />
+                                    <TextBox
+                                        Grid.Row="1"
+                                        Grid.Column="1"
+                                        Text="{Binding Path=CostOfASms}" />
+                                    <TextBox
+                                        Grid.Row="2"
+                                        Grid.Column="0"
+                                        Text="{Binding Path=CostOfAInternationalColl}" />
+                                    <TextBox
+                                        Grid.Row="2"
+                                        Grid.Column="1"
+                                        Text="{Binding Path=SubscriptionFee}" />
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </TabItem.Content>
+            </TabItem>
+        </TabControl>
+
 
     </StackPanel>
 </Window>

@@ -24,6 +24,6 @@ namespace Exam
         public MainWindow()
         {
             InitializeComponent();
-        }
+        }     
     }
 }
